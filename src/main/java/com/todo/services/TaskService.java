@@ -24,4 +24,8 @@ public class TaskService {
     public List<Task> getAll() {
         return this.dao.getAll();
     }
+    
+    public Task get(int id) {
+        return this.dao.get(id);
+    }
 }

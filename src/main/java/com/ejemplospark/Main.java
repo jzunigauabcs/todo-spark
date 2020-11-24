@@ -7,6 +7,7 @@ package com.ejemplospark;
 
 import com.todo.controllers.TaskController;
 import com.todo.routes.TaskRoute;
+import static spark.Spark.port;
 
 /**
  *
@@ -14,7 +15,7 @@ import com.todo.routes.TaskRoute;
  */
 public class Main {
     public static void main(String[] args) {
-        
+        port(5555); //Especifica el puerto por el cual corre la aplicación
         new TaskRoute(new TaskController());
     }
 }

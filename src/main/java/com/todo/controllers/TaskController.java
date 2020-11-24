@@ -22,5 +22,11 @@ public class TaskController {
         TaskService taskService = new TaskService(new TaskDao());
         return taskService.getAll();
     }
+    
+    public Task show(Request req, Response res) {
+        res.type("application/json");
+        TaskService taskService = new TaskService(new TaskDao());
+        int id = Integer.parseInt(req.params(":id"));
+        return taskService.get(id);
+    }
 }
-

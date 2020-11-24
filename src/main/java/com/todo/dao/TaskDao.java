@@ -8,6 +8,7 @@ package com.todo.dao;
 import com.todo.db.ConnectionDB;
 import com.todo.models.Task;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -47,5 +48,31 @@ public class TaskDao {
             db.close();
         }
         return tasks;
+    }
+    
+    public Task get(int id) {
+        ConnectionDB db = new ConnectionDB();
+        Connection conn = null;
+        Task task = null;
+        try {
+            conn = db.getConnection();
+            String query = "SELECT * FROM tasks WHERE id = ?";
+            PreparedStatement pstm = conn.prepareStatement(query);
+            pstm.setInt(1, id);
+            ResultSet rs = pstm.executeQuery();
+            if(rs.next()) {
+                task = new Task();
+                task.setId(rs.getInt("id"));
+                task.setTask(rs.getString("task"));
+                task.setStatus(rs.getString("status"));
+            }
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(TaskDao.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(TaskDao.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            db.close();
+        }
+        return task;
     }
 }
