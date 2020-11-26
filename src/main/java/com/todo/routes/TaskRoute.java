@@ -21,6 +21,8 @@ public class TaskRoute {
         Gson gson = new Gson();
         get("/tasks", (req, res) -> taskController.index(req, res), gson::toJson);
         get("/tasks/:id", (req, res) -> taskController.show(req, res), gson::toJson);
+        post("/tasks", (req, res) -> taskController.store(req, res), gson::toJson);
+        //delete("/tasks/:id");
     }
     
 }

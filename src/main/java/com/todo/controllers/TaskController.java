@@ -5,6 +5,7 @@
  */
 package com.todo.controllers;
 
+import com.google.gson.Gson;
 import com.todo.dao.TaskDao;
 import com.todo.models.Task;
 import com.todo.services.TaskService;
@@ -20,6 +21,10 @@ public class TaskController {
     public List<Task> index(Request req, Response res) {
         res.type("application/json");
         TaskService taskService = new TaskService(new TaskDao());
+        //int page = req.queryParams("page") != null ?  Integer.parseInt(req.queryParams("page")) : 0;
+        if(req.queryParams("search") != null) 
+            return taskService.find(req.queryParams("search"));
+        
         return taskService.getAll();
     }
     
@@ -28,5 +33,13 @@ public class TaskController {
         TaskService taskService = new TaskService(new TaskDao());
         int id = Integer.parseInt(req.params(":id"));
         return taskService.get(id);
+    }
+    
+    public String store(Request req, Response res) {
+       res.type("application/json");
+       Task t  = new Gson().fromJson(req.body(), Task.class);
+        TaskService taskService = new TaskService(new TaskDao());
+       int result = taskService.save(t);
+       return result == 1 ? "Registrado"  : "Ocurrió un error";
     }
 }

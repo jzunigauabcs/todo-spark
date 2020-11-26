@@ -28,4 +28,12 @@ public class TaskService {
     public Task get(int id) {
         return this.dao.get(id);
     }
+    
+    public List<Task> find(String search) {
+        return this.dao.find(search);
+    }
+    
+     public int save(Task t) {
+        return this.dao.save(t);
+    }
 }

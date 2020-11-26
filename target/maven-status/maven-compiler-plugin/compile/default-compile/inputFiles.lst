@@ -1,1 +1,8 @@
 /home/jzuniga/NetBeansProjects/EjemploSpark/src/main/java/com/ejemplospark/Main.java
+/home/jzuniga/NetBeansProjects/EjemploSpark/src/main/java/com/todo/models/Task.java
+/home/jzuniga/NetBeansProjects/EjemploSpark/src/main/java/com/todo/db/ConnectionDB.java
+/home/jzuniga/NetBeansProjects/EjemploSpark/src/main/java/com/todo/controllers/TaskController.java
+/home/jzuniga/NetBeansProjects/EjemploSpark/src/main/java/com/todo/routes/TaskRoute.java
+/home/jzuniga/NetBeansProjects/EjemploSpark/src/main/java/com/todo/dao/TaskDao.java
+/home/jzuniga/NetBeansProjects/EjemploSpark/src/main/java/com/todo/services/TaskService.java
+/home/jzuniga/NetBeansProjects/EjemploSpark/src/main/java/com/todo/config/Database.java

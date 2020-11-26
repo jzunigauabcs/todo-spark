@@ -75,4 +75,52 @@ public class TaskDao {
         }
         return task;
     }
+    
+    public List<Task> find(String search) {
+        ArrayList <Task> tasks = new ArrayList<Task>();
+        ConnectionDB db = new ConnectionDB();
+        Connection conn = null;
+        
+        try {
+            conn = db.getConnection();
+            String query = "SELECT * FROM tasks WHERE task LIKE ?";
+            PreparedStatement pstm = conn.prepareStatement(query);
+            pstm.setString(1, "%"+search+"%");
+            ResultSet rs = pstm.executeQuery();
+            while(rs.next()) {
+                Task t = new Task();
+                t.setId(rs.getInt("id"));
+                t.setTask(rs.getString("task"));
+                t.setStatus(rs.getString("status"));
+                tasks.add(t);
+            }
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(TaskDao.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(TaskDao.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            db.close();
+        }
+        return tasks;
+    } 
+    
+     public int save(Task t) {
+        ConnectionDB db = new ConnectionDB();
+        Connection conn = null;
+        int rs = 0;
+        try {
+            conn = db.getConnection();
+            String query = "INSERT INTO tasks(task) VALUE(?)";
+            PreparedStatement pstm = conn.prepareStatement(query);
+            pstm.setString(1, t.getTask());
+            rs = pstm.executeUpdate();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(TaskDao.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(TaskDao.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            db.close();
+        }
+        return rs;
+    } 
 }

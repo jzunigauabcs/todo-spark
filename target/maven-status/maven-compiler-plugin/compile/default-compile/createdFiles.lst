@@ -1,1 +1,8 @@
+com/todo/dao/TaskDao.class
+com/todo/config/Database.class
+com/todo/services/TaskService.class
 com/ejemplospark/Main.class
+com/todo/controllers/TaskController.class
+com/todo/db/ConnectionDB.class
+com/todo/models/Task.class
+com/todo/routes/TaskRoute.class
