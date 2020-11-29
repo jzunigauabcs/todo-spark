@@ -13,6 +13,15 @@ public class Task {
     private int id;
     private String task;
     private String status;
+    private int userId;
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
 
     public int getId() {
         return id;

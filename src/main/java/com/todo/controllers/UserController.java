@@ -12,7 +12,6 @@ import com.todo.helpers.BaseResponse;
 import com.todo.helpers.DataResponse;
 import com.todo.models.Task;
 import com.todo.services.TaskService;
-import java.util.List;
 import spark.Request;
 import spark.Response;
 
@@ -20,37 +19,16 @@ import spark.Response;
  *
  * @author jzuniga
  */
-public class TaskController {
-    public DataResponse index(Request req, Response res) {
-        res.type("application/json");
-        TaskService taskService = new TaskService(new TaskDao());
-        DataResponse response = new DataResponse();
-        
-        if(req.queryParams("search") != null) {
-             response.write(taskService.find(req.queryParams("search")));
-        } else {
-            response.write(taskService.getAll());
-        }
-        
-        return response;
-    }
-    
-    public DataResponse show(Request req, Response res) {
-        res.type("application/json");
-        TaskService taskService = new TaskService(new TaskDao());
-        int id = Integer.parseInt(req.params(":id"));
-        DataResponse response = new DataResponse();
-        response.write(taskService.get(id));
-        
-        return response;
-    }
+public class UserController {
     
     public DataResponse store(Request req, Response res) {
        res.type("application/json");
        Task t  = new Gson().fromJson(req.body(), Task.class);
        TaskService taskService = new TaskService(new TaskDao());
        int result = taskService.save(t);
+       
        DataResponse response = new DataResponse();
+       
        if(result == 1) {
            response.write("Registrado");
            response.setStatus(StatusCode.CREATE);
@@ -68,7 +46,7 @@ public class TaskController {
        int id = Integer.parseInt(req.params(":id"));
        int result = taskService.update(t, id);
        DataResponse response = new DataResponse();
-       
+        
        if(result == 1) {
            response.write("Datos actualizados correctamente");
            response.setStatus(StatusCode.OK);
@@ -85,6 +63,7 @@ public class TaskController {
        int id = Integer.parseInt(req.params(":id"));
        int result = taskService.delete(id);
        DataResponse response = new DataResponse();
+       
        if(result == 1) {
            response.write("Datos eliminados correctamente");
            response.setStatus(StatusCode.OK);

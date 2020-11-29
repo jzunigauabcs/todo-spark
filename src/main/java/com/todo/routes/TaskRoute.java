@@ -7,7 +7,6 @@ package com.todo.routes;
 
 import com.google.gson.Gson;
 import com.todo.controllers.TaskController;
-import spark.Spark;
 import static spark.Spark.*;
 
 /**
@@ -22,7 +21,8 @@ public class TaskRoute {
         get("/tasks", (req, res) -> taskController.index(req, res), gson::toJson);
         get("/tasks/:id", (req, res) -> taskController.show(req, res), gson::toJson);
         post("/tasks", (req, res) -> taskController.store(req, res), gson::toJson);
-        //delete("/tasks/:id");
+        put("/tasks/:id", (req, res) -> taskController.update(req, res), gson::toJson);
+        delete("tasks/:id", (req, res) -> taskController.delete(req, res), gson::toJson);
     }
     
 }

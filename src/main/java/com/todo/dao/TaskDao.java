@@ -38,6 +38,7 @@ public class TaskDao {
                 t.setId(rs.getInt("id"));
                 t.setTask(rs.getString("task"));
                 t.setStatus(rs.getString("status"));
+                t.setUserId(rs.getInt("user_id"));
                 tasks.add(t);
             }
         } catch (ClassNotFoundException ex) {
@@ -53,7 +54,7 @@ public class TaskDao {
     public Task get(int id) {
         ConnectionDB db = new ConnectionDB();
         Connection conn = null;
-        Task task = null;
+        Task t = null;
         try {
             conn = db.getConnection();
             String query = "SELECT * FROM tasks WHERE id = ?";
@@ -61,10 +62,11 @@ public class TaskDao {
             pstm.setInt(1, id);
             ResultSet rs = pstm.executeQuery();
             if(rs.next()) {
-                task = new Task();
-                task.setId(rs.getInt("id"));
-                task.setTask(rs.getString("task"));
-                task.setStatus(rs.getString("status"));
+                t = new Task();
+                t.setId(rs.getInt("id"));
+                t.setTask(rs.getString("task"));
+                t.setStatus(rs.getString("status"));
+                t.setUserId(rs.getInt("user_id"));
             }
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(TaskDao.class.getName()).log(Level.SEVERE, null, ex);
@@ -73,7 +75,7 @@ public class TaskDao {
         } finally {
             db.close();
         }
-        return task;
+        return t;
     }
     
     public List<Task> find(String search) {
@@ -92,6 +94,7 @@ public class TaskDao {
                 t.setId(rs.getInt("id"));
                 t.setTask(rs.getString("task"));
                 t.setStatus(rs.getString("status"));
+                t.setUserId(rs.getInt("user_id"));
                 tasks.add(t);
             }
         } catch (ClassNotFoundException ex) {
@@ -104,7 +107,7 @@ public class TaskDao {
         return tasks;
     } 
     
-     public int save(Task t) {
+    public int save(Task t) {
         ConnectionDB db = new ConnectionDB();
         Connection conn = null;
         int rs = 0;
@@ -113,6 +116,47 @@ public class TaskDao {
             String query = "INSERT INTO tasks(task) VALUE(?)";
             PreparedStatement pstm = conn.prepareStatement(query);
             pstm.setString(1, t.getTask());
+            rs = pstm.executeUpdate();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(TaskDao.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(TaskDao.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            db.close();
+        }
+        return rs;
+    }
+    
+    public int update(Task t, int id) {
+        ConnectionDB db = new ConnectionDB();
+        Connection conn = null;
+        int rs = 0;
+        try {
+            conn = db.getConnection();
+            String query = "UPDATE tasks SET status=? WHERE id=?";
+            PreparedStatement pstm = conn.prepareStatement(query);
+            pstm.setString(1, t.getStatus());
+            pstm.setInt(2, id);
+            rs = pstm.executeUpdate();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(TaskDao.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(TaskDao.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            db.close();
+        }
+        return rs;
+    } 
+    
+    public int delete(int id) {
+        ConnectionDB db = new ConnectionDB();
+        Connection conn = null;
+        int rs = 0;
+        try {
+            conn = db.getConnection();
+            String query = "DELETE FROM tasks WHERE id=?";
+            PreparedStatement pstm = conn.prepareStatement(query);
+            pstm.setInt(1, id);
             rs = pstm.executeUpdate();
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(TaskDao.class.getName()).log(Level.SEVERE, null, ex);

@@ -33,7 +33,15 @@ public class TaskService {
         return this.dao.find(search);
     }
     
-     public int save(Task t) {
+    public int save(Task t) {
         return this.dao.save(t);
+    }
+    
+    public int update(Task t, int id) {
+        return this.dao.update(t, id);
+    }
+    
+     public int delete(int id) {
+        return this.dao.delete(id);
     }
 }
