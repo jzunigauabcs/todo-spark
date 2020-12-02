@@ -123,4 +123,47 @@ public class TaskDao {
         }
         return rs;
     } 
+     
+     public int update(Task t, int id) {
+         ConnectionDB db = new ConnectionDB();
+         Connection conn = null;
+         int rs = 0;
+        try {
+            conn = db.getConnection();
+            String query = "UPDATE tasks SET status=? WHERE id=?";
+            PreparedStatement pstm = conn.prepareStatement(query);
+            pstm.setString(1, t.getStatus());
+            pstm.setInt(2, id);
+            rs = pstm.executeUpdate();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(TaskDao.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(TaskDao.class.getName()).log(Level.SEVERE, null, ex);
+            rs = -1;
+        } finally {
+            db.close();
+        }
+        return rs;
+     }
+     
+     public int delete(int id) {
+         ConnectionDB db = new ConnectionDB();
+         Connection conn = null;
+         int rs = 0;
+        try {
+            conn = db.getConnection();
+            String query = "DELETE FROM tasks WHERE id=?";
+            PreparedStatement pstm = conn.prepareStatement(query);
+            pstm.setInt(1, id);
+            rs = pstm.executeUpdate();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(TaskDao.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(TaskDao.class.getName()).log(Level.SEVERE, null, ex);
+            rs = -1;
+        } finally {
+            db.close();
+        }
+        return rs;
+     }
 }

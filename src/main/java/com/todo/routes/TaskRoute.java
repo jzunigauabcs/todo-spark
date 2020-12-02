@@ -9,7 +9,7 @@ import com.google.gson.Gson;
 import com.todo.controllers.TaskController;
 import spark.Spark;
 import static spark.Spark.*;
-
+import static com.todo.config.ResourcesName.TASKS;
 /**
  *
  * @author jzuniga
@@ -19,10 +19,12 @@ public class TaskRoute {
     
     public TaskRoute(TaskController taskController) {
         Gson gson = new Gson();
-        get("/tasks", (req, res) -> taskController.index(req, res), gson::toJson);
-        get("/tasks/:id", (req, res) -> taskController.show(req, res), gson::toJson);
-        post("/tasks", (req, res) -> taskController.store(req, res), gson::toJson);
-        //delete("/tasks/:id");
+        String resource = "";
+        get(TASKS, (req, res) -> taskController.index(req, res), gson::toJson);
+        get(TASKS + "/:id", (req, res) -> taskController.show(req, res), gson::toJson);
+        post(TASKS, (req, res) -> taskController.store(req, res), gson::toJson);
+        put(TASKS + "/:id", (req, res) -> taskController.update(req, res), gson::toJson);
+        delete(TASKS + "/:id",  (req, res) -> taskController.delete(req, res), gson::toJson);
     }
     
 }
