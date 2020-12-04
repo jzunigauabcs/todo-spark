@@ -21,8 +21,8 @@ public class TaskService {
         this.dao = dao;
     }
     
-    public List<Task> getAll() {
-        return this.dao.getAll();
+    public List<Task> getAll(int userId) {
+        return this.dao.getAll(userId);
     }
     
     public Task get(int id) {

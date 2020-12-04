@@ -23,16 +23,17 @@ import java.util.logging.Logger;
  */
 public class TaskDao {
     
-    public List<Task> getAll() {
+    public List<Task> getAll(int userId) {
         ArrayList <Task> tasks = new ArrayList<Task>();
         ConnectionDB db = new ConnectionDB();
         Connection conn = null;
         
         try {
             conn = db.getConnection();
-            String query = "SELECT * FROM tasks";
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(query);
+            String query = "SELECT * FROM tasks WHERE user_id=?";
+            PreparedStatement pstm = conn.prepareStatement(query);
+            pstm.setInt(1, userId);
+            ResultSet rs = pstm.executeQuery();
             while(rs.next()) {
                 Task t = new Task();
                 t.setId(rs.getInt("id"));

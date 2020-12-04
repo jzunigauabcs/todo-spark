@@ -9,9 +9,7 @@ package com.todo.config;
  *
  * @author jzuniga
  */
-public class ResourcesName {
-    public static final String API = "/api";
-    public static final String TASKS = "/tasks";
-    public static final String AUTH = "/auth";
-    public static final String AUTH_LOGIN = AUTH + "/login";
+public class Secret {
+    public static final String JWT_SECRET = "dje3dj49x2k4d";
+    public static final long TOKEN_EXPIRATION = 86400000;
 }

@@ -25,13 +25,13 @@ public class TaskController {
         TaskService taskService = new TaskService(new TaskDao());
         DataResponse response = new DataResponse();
         List<Task> tasks = null;
-        
+        int userId = req.attribute("userId");
         if(req.queryParams("search") != null) 
             tasks = taskService.find(req.queryParams("search"));
         else
-            tasks = taskService.getAll();
-        
-        return response.write("Datos obtenidos correctamente", tasks);
+            tasks = taskService.getAll(userId);
+         res.status(OK);
+        return response.setStatus(OK).write("Operación exitosa",tasks);
         
     }
     
@@ -68,7 +68,7 @@ public class TaskController {
            status = BAD_REQUEST;
         }
         res.status(status);
-       return response.setStatus(status).write(msg);
+       return response.setStatus(status).write(msg, new ArrayList());
     }
     
     public DataResponse update (Request req, Response res) {
