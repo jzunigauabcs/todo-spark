@@ -25,11 +25,11 @@ public class TaskController {
         TaskService taskService = new TaskService(new TaskDao());
         DataResponse response = new DataResponse();
         List<Task> tasks = null;
-        
+        int userId = req.attribute("userId");
         if(req.queryParams("search") != null) 
             tasks = taskService.find(req.queryParams("search"));
         else
-            tasks = taskService.getAll();
+            tasks = taskService.getAll(userId);
         
         return response.write("Datos obtenidos correctamente", tasks);
         
